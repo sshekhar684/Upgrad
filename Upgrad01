@@ -1,0 +1,143 @@
+import java.util.Scanner;
+
+class Work{
+	   static  Scanner ok = new Scanner(System.in);
+	   static String decide[]=new String[80];
+	   static double cgpa[]= new double[80];
+	   static double cgpaStore[]= new double[80];
+	   static String name[]= new String[80];
+	   static String nameStore[]= new String[80];
+	   static int token[]= new int[80];
+	   static int tokenStore[]= new int[80];
+	   static int range,serveCount,init=0,strsc,empty=0,
+			   enterCount=0,que=0,initCount=0,loop=0;
+	   public static void arrange(){
+	   for(int i=0;i<enterCount;i++){
+	      for(int j=0;j<enterCount;j++){
+	    	  //cgpa-arrangement
+	          if(cgpa[j]<cgpa[j+1])
+	          {
+	           double temp=cgpa[j];
+	           String s = name [j];
+	           int change = token[j];
+	           
+	            cgpa[j]=cgpa[j+1];
+	            name[j] = name[j+1];
+	            token[j] = token[j+1];
+	            
+	            cgpa[j+1]=temp;
+	            name [j+1] = s;
+	            token[j+1] = change;
+	          }
+	        //if cgpa equal
+	          if(cgpa[j]==cgpa[j+1]){
+	        	  //name-arrangement
+	        	  if (name[j].compareTo(name[j+1])>0) {
+	        		  String tempo = name[j];
+	        		  int nc = token[j];
+	        		  
+	                  name[j] = name[j+1];
+	                  token[j] = token[j+1];
+	                  
+	                  name[j+1] = tempo;
+	                  token[j+1] = nc;
+	        	  }
+	        	  //if name equal
+	        	  if (name[j].compareTo(name[j+1])==0){
+	        		 if(token[j]>token[j+1]){
+	        			 int tk = token[j];
+	        			 token[j] = token [j+1];
+	        			 token[j+1] = tk;
+	        		 }}}}}
+	  
+	   }
+	   public static void store(){
+		   for(int str=serveCount;str<initCount;str++){	 
+			   nameStore[loop]=name[str];
+			   cgpaStore[loop]=cgpa[str];
+			   tokenStore[loop]=token[str];
+			   loop++;
+			   for(int i=0;i<loop;i++){
+				      for(int j=0;j<loop;j++){
+				    	  //cgpa-arrangement
+				          if(cgpaStore[j]<cgpaStore[j+1])
+				          {
+				           double temp=cgpaStore[j];
+				           String s = nameStore [j];
+				           int change = tokenStore[j];
+				           
+				            cgpaStore[j]=cgpaStore[j+1];
+				            nameStore[j] = nameStore[j+1];
+				            tokenStore[j] = tokenStore[j+1];
+				            
+				            cgpaStore[j+1]=temp;
+				            nameStore [j+1] = s;
+				            tokenStore[j+1] = change;
+				          }
+				        //if cgpa equal
+				          if(cgpaStore[j]==cgpaStore[j+1]){
+				        	  //name-arrangement
+				        	  if (nameStore[j].compareTo(nameStore[j+1])>0) {
+				        		  String tempo = nameStore[j];
+				        		  int nc = tokenStore[j];
+				        		  
+				                  nameStore[j] = nameStore[j+1];
+				                  tokenStore[j] = tokenStore[j+1];
+				                  
+				                  nameStore[j+1] = tempo;
+				                  tokenStore[j+1] = nc;
+				        	  }
+				        	  //if name equal
+				        	  if (nameStore[j].compareTo(nameStore[j+1])==0){
+				        		 if(tokenStore[j]>tokenStore[j+1]){
+				        			 int tk = tokenStore[j];
+				        			 tokenStore[j] = tokenStore [j+1];
+				        			 tokenStore[j+1] = tk;
+				        		 }}}}}
+		   }
+	   }
+}
+
+public class Upgrad extends Work{  
+	public static void main(String[] args) {
+		//input
+		range = ok.nextInt();
+		for(int i=0;i<range;i++){
+			decide[i]=ok.next();
+			if(decide[i].equals("ENTER")){
+				if(i>=1){
+					//System.out.println(i);
+				if(decide[i-1].equals("SERVED")){
+					//System.out.println("YESME");
+				store();
+				}}
+				name[init]=ok.next();
+				cgpa[init]=ok.nextDouble();
+				token[init]=ok.nextInt();
+				init++;
+				initCount=init;
+				enterCount++;
+				serveCount=0;	
+				que=0;
+			}
+			if(decide[i].equals("SERVED")){	
+				++serveCount;
+				if(que==0){
+				arrange();
+				init=0;
+				enterCount=0;
+				que=1;
+				}
+				if(i==range-1)	
+					store();
+				}	
+		}
+		for(int str=0;str<loop;str++){
+			if(nameStore[str]!=null){
+				System.out.println(nameStore[str]);
+			empty++;
+			}
+		}
+		if(empty==0)
+		     System.out.println("EMPTY");
+	}}
